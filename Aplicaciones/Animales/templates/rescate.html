@@ -1,0 +1,66 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+<br>
+<h1>Listado de Rescates</h1>
+<a href="/nuevoRescate" class="btn btn-primary">Agregar Rescate</a>
+
+<table class="table table-bordered table-striped table-hover" id="tbl_rescates">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>LUGAR</th>
+            <th>FECHA</th>
+            <th>ESTADO</th>
+            <th>ACCIONES</th>
+        </tr>
+    </thead>
+    <tbody>
+        <script>
+            function eliminarRescate(id){
+                Swal.fire({
+                    title: "CONFIRMACIÓN",
+                    text: "¿Deseas eliminar este rescate?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sí, eliminar"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "/eliminarRescate/" + id;
+                    }
+                });
+            }
+        </script>
+
+        {% for rescate in rescates %}
+        <tr>
+            <td>{{ rescate.id }}</td>
+            <td>{{ rescate.lugar }}</td>
+            <td>{{ rescate.fecha }}</td>
+            <td>{{ rescate.estado }}</td>
+            <td>
+                <a href="/editarRescate/{{ rescate.id }}" class="btn btn-outline-warning"><i class="fa fa-pen"></i></a>
+                <a href="#" onclick="eliminarRescate('{{ rescate.id }}');" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    new DataTable('#tbl_rescates', {
+        language: {
+            "search": "Buscar:",
+            "lengthMenu": "Mostrar _MENU_ entradas",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+            "paginate": {
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+            "zeroRecords": "No se encontraron registros",
+            "infoEmpty": "No hay datos disponibles",
+        }
+    });
+</script>
+{% endblock %}
