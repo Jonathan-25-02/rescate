@@ -1,0 +1,56 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 bg-light">
+        <h1>Nuevo Rescate</h1>
+
+        <form action="/guardarRescate" method="post" enctype="multipart/form-data" id="frm_nuevo_rescate">
+            {% csrf_token %}
+
+            <label for="ubicacion">Ubicación:</label>
+            <input type="text" class="form-control" name="ubicacion" id="ubicacion" placeholder="Ingrese la ubicación del rescate" required><br>
+
+            <label for="fecha">Fecha:</label>
+            <input type="date" class="form-control" name="fecha" id="fecha" required><br>
+
+            <label for="descripcion">Descripción:</label>
+            <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Describa el rescate" required></textarea><br>
+
+            <label for="foto">Foto:</label>
+            <input type="file" name="foto" id="foto" class="form-control"><br>
+
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a href="/rescate" class="btn btn-outline-danger">Cancelar</a>
+        </form>
+
+        <script>
+            $("#frm_nuevo_rescate").validate({
+                rules: {
+                    ubicacion: { required: true, minlength: 5 },
+                    fecha: { required: true },
+                    descripcion: { required: true }
+                },
+                messages: {
+                    ubicacion: {
+                        required: "Campo obligatorio",
+                        minlength: "Debe tener al menos 5 caracteres"
+                    },
+                    descripcion: {
+                        required: "Por favor describa el rescate"
+                    }
+                }
+            });
+
+            $("#foto").fileinput({
+                language: "es",
+                allowedFileExtensions: ["jpg", "png", "jpeg"],
+                showCaption: false,
+                dropZoneEnabled: true,
+                showClose: false
+            });
+        </script>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+{% endblock %}
