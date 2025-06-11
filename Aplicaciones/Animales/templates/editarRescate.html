@@ -1,0 +1,26 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 bg-light">
+        <h1>Editar Rescate</h1>
+
+        <form action="/procesarEdicionRescate/{{ rescateEditar.id }}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="fecha">Fecha:</label>
+            <input class="form-control" type="text" name="fecha" id="fecha" value="{{ rescateEditar.fecha }}"><br>
+
+            <label for="ubicacion">Ubicación:</label>
+            <input class="form-control" type="text" name="ubicacion" id="ubicacion" value="{{ rescateEditar.ubicacion }}"><br>
+
+            <label for="foto_rescate">Foto del Rescate:</label>
+            <input class="form-control" type="file" name="foto_rescate" id="foto_rescate"><br>
+
+            <button class="btn btn-warning" type="submit"><i class="fa fa-pen"></i> Editar</button>
+            <a class="btn btn-outline-danger" href="/rescate"><i class="fa fa-times"></i> Cancelar</a>
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 bg-light">
+        <h1>Editar Equipo</h1>
+
+        <form action="/procesarEdicionEquipo/{{ equipoEditar.id }}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="nombre">Nombre:</label>
+            <input class="form-control" type="text" name="nombre" id="nombre" value="{{ equipoEditar.nombre }}"><br>
+
+            <label for="especialidad">Especialidad:</label>
+            <input class="form-control" type="text" name="especialidad" id="especialidad" value="{{ equipoEditar.especialidad }}"><br>
+
+            <label for="foto_equipo">Foto del Equipo:</label>
+            <input class="form-control" type="file" name="foto_equipo" id="foto_equipo"><br>
+
+            <button class="btn btn-warning" type="submit"><i class="fa fa-pen"></i> Editar</button>
+            <a class="btn btn-outline-danger" href="/equipo"><i class="fa fa-times"></i> Cancelar</a>
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+{% endblock %}
