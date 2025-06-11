@@ -1,0 +1,54 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 bg-light">
+        <h1>Nuevo Reporte de Rescate</h1>
+
+        <form action="/guardarReporte" enctype="multipart/form-data" method="post" id="frm_nuevo_reporte">
+            {% csrf_token %}
+
+            <label for="observaciones">Observaciones:</label><br>
+            <input placeholder="Ingrese las observaciones del rescate" class="form-control" type="text" name="observaciones" id="observaciones" required><br><br>
+
+            <label for="reporte_pdf">Documento PDF:</label>
+            <input type="file" name="reporte_pdf" id="reporte_pdf" class="form-control" required><br>
+
+            <button class="btn btn-success" type="submit">Guardar</button>
+            <a class="btn btn-outline-danger" href="/reporte">Cancelar</a>
+        </form>
+
+        <script>
+            $("#frm_nuevo_reporte").validate({
+                rules:{
+                    "observaciones" : {
+                        required : true,
+                        minlength : 5
+                    },
+                    "reporte_pdf": {
+                        required: true
+                    }
+                },
+                messages:{
+                    "observaciones": {
+                        required: "Campo obligatorio",
+                        minlength: "Debe contener al menos 5 caracteres"
+                    },
+                    "reporte_pdf": {
+                        required: "Debe subir un documento PDF"
+                    }
+                }
+            });
+
+            $("#reporte_pdf").fileinput({
+                language: "es",
+                allowedFileExtensions: ["pdf"],
+                showCaption: false,
+                dropZoneEnabled: true,
+                showClose: false
+            });
+        </script>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+{% endblock %}
