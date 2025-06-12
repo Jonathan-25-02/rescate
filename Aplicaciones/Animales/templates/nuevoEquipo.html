@@ -25,11 +25,11 @@
             $("#frm_nuevo_equipo").validate({
                 rules: {
                     "nombre": { required: true, minlength: 3 },
-                    "especialidad": { required: true }
+                    "especialidad": { required: true, minlength: 5 }
                 },
                 messages: {
                     "nombre": { required: "Campo obligatorio", minlength: "Mínimo 3 caracteres" },
-                    "especialidad": { required: "Ingrese la especialidad del equipo" }
+                    "especialidad": { required: "Ingrese la especialidad del equipo", minlength: "Mínimo 5 caracteres" }
                 }
             });
         </script>
