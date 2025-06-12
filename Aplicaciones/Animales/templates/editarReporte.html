@@ -39,10 +39,10 @@
         <script>
             $("#frm_editar_reporte").validate({
                 rules: {
-                    "observaciones": { required: true }
+                    "observaciones": { required: true, minlength: 5 },
                 },
                 messages: {
-                    "observaciones": { required: "Campo obligatorio" }
+                    "observaciones": { required: "Campo obligatorio", minlength: "Mínimo 5 caracteres" }
                 }
             });
             $("#pdf_informe").fileinput({
