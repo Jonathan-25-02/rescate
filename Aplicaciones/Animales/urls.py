@@ -2,6 +2,18 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+
+    # ===================== ESPECIE =====================
+    path('especies/', views.lista_especies),
+    path('nuevaEspecie/', views.nueva_especie),
+    path('guardarEspecie/', views.guardar_especie),
+    path('editarEspecie/<id>/', views.editar_especie),
+    path('actualizarEspecie/<id>/', views.actualizar_especie),
+    path('eliminarEspecie/<id>/', views.eliminar_especie),
+
+
+
+
     # ===================== RESCATE =====================
     path('', views.rescate),
     path('rescate/', views.rescate),

@@ -1,0 +1,73 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+<br>
+<h1>Listado de Especies</h1>
+<a href="/nuevaEspecie" class="btn btn-primary">Agregar especie</a>
+
+<table class="table table-bordered table-striped table-hover" id="tbl_especies">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for especie in especies %}
+        <tr>
+            <td>{{ especie.id }}</td>
+            <td>{{ especie.nombre }}</td>
+            <td>{{ especie.descripcion }}</td>
+            <td>
+                <a href="/editarEspecie/{{ especie.id }}" class="btn btn-outline-warning">
+                    <i class="fa fa-pen"></i>
+                </a>
+                <a href="#" onclick="eliminarEspecie('{{ especie.id }}')" class="btn btn-outline-danger">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    function eliminarEspecie(id) {
+        Swal.fire({
+            title: "Confirmación",
+            text: "¿Estás seguro de eliminar esta especie?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí, eliminar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/eliminarEspecie/" + id;
+            }
+        });
+    }
+
+    let table = new DataTable('#tbl_especies', {
+        language: {
+            "decimal": "",
+            "emptyTable": "No hay datos disponibles",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ especies",
+            "infoEmpty": "Mostrando 0 a 0 de 0 especies",
+            "infoFiltered": "(filtrado de _MAX_ especies totales)",
+            "lengthMenu": "Mostrar _MENU_ especies",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Buscar:",
+            "zeroRecords": "No se encontraron especies",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    });
+</script>
+{% endblock %}

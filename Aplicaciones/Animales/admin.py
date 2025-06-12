@@ -5,3 +5,4 @@ from .models import Rescate, EquipoRescate, ReporteRescate, Especie
 admin.register(Rescate)
 admin.register(EquipoRescate)
 admin.register(ReporteRescate)
+admin.register(Especie)
