@@ -5,20 +5,20 @@
     <div class="col-md-6 bg-light">
         <h1>Actualizar Equipo de Rescate</h1>
 
-        <form action="/procesarEdicionEquipo/{{ equipo.id }}" method="post" enctype="multipart/form-data" id="frm_editar_equipo">
+        <form action="/procesarEdicionEquipo/{{ equipoEditar.id }}" method="post" enctype="multipart/form-data" id="frm_editar_equipo">
             {% csrf_token %}
 
             <label for="nombre">Nombre:</label>
-            <input class="form-control" type="text" name="nombre" id="nombre" value="{{ equipo.nombre }}" required><br>
+            <input class="form-control" type="text" name="nombre" id="nombre" value="{{ equipoEditar.nombre }}" required><br>
 
             <label for="especialidad">Especialidad:</label>
-            <input class="form-control" type="text" name="especialidad" id="especialidad" value="{{ equipo.especialidad }}" required><br>
+            <input class="form-control" type="text" name="especialidad" id="especialidad" value="{{ equipoEditar.especialidad }}" required><br>
 
             <label for="foto_equipo">Foto del Equipo:</label>
             <input class="form-control" type="file" name="foto_equipo" id="foto_equipo"><br>
 
             <button class="btn btn-warning" type="submit"><i class="fa fa-pen"></i> Editar</button>
-            <a class="btn btn-outline-danger" href="/equipos"><i class="fa fa-times"></i> Cancelar</a>
+            <a class="btn btn-outline-danger" href="/equipo"><i class="fa fa-times"></i> Cancelar</a>
         </form>
 
         <script>
