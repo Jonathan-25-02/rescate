@@ -14,6 +14,14 @@
             <label for="ubicacion">Ubicación:</label>
             <input placeholder="Ingrese la ubicación del rescate" type="text" class="form-control" name="ubicacion" id="ubicacion" required><br>
 
+            <label>Especie:</label>
+            <select name="especie" class="form-control" required>
+                <option value="" disabled selected>Seleccione una especie</option>
+                {% for especie in especies %}
+                <option value="{{ especie.id }}">{{ especie.nombre }}</option>
+                {% endfor %}
+            </select><br>
+
             <label for="foto_rescate">Foto del rescate:</label>
             <input type="file" class="form-control" name="foto_rescate" id="foto_rescate" accept="image/*"><br>
 

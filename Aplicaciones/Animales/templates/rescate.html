@@ -10,6 +10,7 @@
             <th>ID</th>
             <th>Fecha</th>
             <th>Ubicación</th>
+            <th>Especie</th>
             <th>Foto</th>
             <th>Acciones</th>
         </tr>
@@ -20,6 +21,7 @@
             <td>{{ r.id }}</td>
             <td>{{ r.fecha }}</td>
             <td>{{ r.ubicacion }}</td>
+            <td>{{ r.especie.nombre }}</td>
             <td>
                 {% if r.foto_rescate %}
                     <img src="{{ r.foto_rescate.url }}" height="80px" alt="">

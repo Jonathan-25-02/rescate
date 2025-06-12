@@ -8,14 +8,16 @@ def rescate(request):
     return render(request, "rescate.html", {'rescates': rescates})
 
 def nuevoRescate(request):
-    return render(request, "nuevoRescate.html")
+    especies = Especie.objects.all()
+    return render(request, "nuevoRescate.html", {'especies': especies})
 
 def guardarRescate(request):
     fecha = request.POST["fecha"]
     ubicacion = request.POST["ubicacion"]
+    especie_id = request.POST["especie"]
     foto = request.FILES.get("foto_rescate")
-
-    Rescate.objects.create(fecha=fecha, ubicacion=ubicacion, foto_rescate=foto)
+    especie= Especie.objects.get(id=especie_id)
+    Rescate.objects.create(fecha=fecha, ubicacion=ubicacion, especie=especie, foto_rescate=foto)
     messages.success(request, "Rescate guardado exitosamente")
     return redirect('/rescates/')
 
@@ -27,12 +29,15 @@ def eliminarRescate(request, id):
 
 def editarRescate(request, id):
     rescateEditar = get_object_or_404(Rescate, id=id)
-    return render(request, "editarRescate.html", {'rescateEditar': rescateEditar})
+    especies = Especie.objects.all()
+    return render(request, "editarRescate.html", {'rescateEditar': rescateEditar, 'especies': especies})
 
 def procesarEdicionRescate(request, id):
     rescate = get_object_or_404(Rescate, id=id)
     rescate.fecha = request.POST["fecha"]
     rescate.ubicacion = request.POST["ubicacion"]
+    especie_id = request.POST["especie"]
+    rescate.especie = Especie.objects.get(id=especie_id)
     rescate.foto_rescate = request.FILES.get("foto_rescate", rescate.foto_rescate)
     rescate.save()
     messages.success(request, "Rescate actualizado correctamente")
