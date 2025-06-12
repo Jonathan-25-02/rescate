@@ -5,7 +5,7 @@
     <div class="col-md-6 bg-light">
         <h1>Nuevo Reporte de Rescate</h1>
 
-        <form action="/guardarReporte" method="post" enctype="multipart/form-data" id="frm_nuevo_reporte">
+        <form action="/guardarReporte/" method="post" enctype="multipart/form-data" id="frm_nuevo_reporte">
             {% csrf_token %}
 
             <label for="rescate">Rescate:</label>
@@ -46,6 +46,16 @@
                     "equipo": { required: "Seleccione un equipo" },
                     "observaciones": { required: "Ingrese observaciones", minlength: "Mínimo 5 caracteres" }
                 }
+            });
+        </script>
+        <script>
+            $("#pdf_informe").fileinput({
+                language: "es",
+                allowedFileExtensions: ["pdf, doc", "docx", "txt"],
+                maxFileSize: 10240,  // Tamaño máximo de 10 MB
+                showCaption: false,
+                dropZoneEnabled: true,
+                showClose: false
             });
         </script>
     </div>

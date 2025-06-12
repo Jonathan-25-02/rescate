@@ -5,13 +5,13 @@
     <div class="col-md-6 bg-light">
         <h1>Actualizar Reporte de Rescate</h1>
 
-        <form action="/actualizarReporte/{{ reporte.id }}" method="post" enctype="multipart/form-data" id="frm_editar_reporte">
+        <form action="/procesarEdicionReporte/{{ reporteEditar.id }}" method="post" enctype="multipart/form-data" id="frm_editar_reporte">
             {% csrf_token %}
 
             <label for="rescate">Rescate:</label>
             <select class="form-control" name="rescate" id="rescate" required>
                 {% for r in rescates %}
-                    <option value="{{ r.id }}" {% if reporte.rescate.id == r.id %}selected{% endif %}>
+                    <option value="{{ r.id }}" {% if reporteEditar.rescate.id == r.id %}selected{% endif %}>
                         {{ r }}
                     </option>
                 {% endfor %}
@@ -20,20 +20,20 @@
             <label for="equipo">Equipo:</label>
             <select class="form-control" name="equipo" id="equipo" required>
                 {% for e in equipos %}
-                    <option value="{{ e.id }}" {% if reporte.equipo.id == e.id %}selected{% endif %}>
+                    <option value="{{ e.id }}" {% if reporteEditar.equipo.id == e.id %}selected{% endif %}>
                         {{ e }}
                     </option>
                 {% endfor %}
             </select><br>
 
             <label for="observaciones">Observaciones:</label>
-            <textarea class="form-control" name="observaciones" id="observaciones" required>{{ reporte.observaciones }}</textarea><br>
+            <textarea class="form-control" name="observaciones" id="observaciones" required>{{ reporteEditar.observaciones }}</textarea><br>
 
             <label for="pdf_informe">Informe en PDF:</label>
             <input class="form-control" type="file" name="pdf_informe" id="pdf_informe"><br>
 
             <button class="btn btn-warning" type="submit"><i class="fa fa-pen"></i> Editar</button>
-            <a class="btn btn-outline-danger" href="/reportes"><i class="fa fa-times"></i> Cancelar</a>
+            <a class="btn btn-outline-danger" href="/reportes/"><i class="fa fa-times"></i> Cancelar</a>
         </form>
 
         <script>

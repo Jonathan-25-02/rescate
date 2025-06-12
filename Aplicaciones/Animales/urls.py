@@ -4,19 +4,18 @@ from . import views
 urlpatterns = [
 
     # ===================== ESPECIE =====================
-    path('especies/', views.lista_especies),
-    path('nuevaEspecie/', views.nueva_especie),
-    path('guardarEspecie/', views.guardar_especie),
-    path('editarEspecie/<id>/', views.editar_especie),
-    path('actualizarEspecie/<id>/', views.actualizar_especie),
-    path('eliminarEspecie/<id>/', views.eliminar_especie),
-
-
+    path('', views.listaEspecies),
+    path('especies/', views.listaEspecies),
+    path('nuevaEspecie/', views.nuevaEspecie),
+    path('guardarEspecie/', views.guardarEspecie),
+    path('editarEspecie/<id>/', views.editarEspecie),
+    path('actualizarEspecie/<id>/', views.actualizarEspecie),
+    path('eliminarEspecie/<id>/', views.eliminarEspecie),
 
 
     # ===================== RESCATE =====================
-    path('', views.rescate),
-    path('rescate/', views.rescate),
+    
+    path('rescates/', views.rescate),
     path('nuevoRescate/', views.nuevoRescate),
     path('guardarRescate/', views.guardarRescate),
     path('eliminarRescate/<id>', views.eliminarRescate),
@@ -24,7 +23,7 @@ urlpatterns = [
     path('procesarEdicionRescate/<id>', views.procesarEdicionRescate),
 
     # ===================== EQUIPO DE RESCATE =====================
-    path('equipos/', views.equipo),
+    path('equipo/', views.equipo),
     path('nuevoEquipo/', views.nuevoEquipo),
     path('guardarEquipo/', views.guardarEquipo),
     path('eliminarEquipo/<id>', views.eliminarEquipo),

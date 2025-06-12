@@ -5,20 +5,20 @@
     <div class="col-md-6 bg-light">
         <h1>Actualizar Rescate</h1>
 
-        <form action="/actualizarRescate/{{ rescate.id }}" method="post" enctype="multipart/form-data" id="frm_editar_rescate">
+        <form action="/procesarEdicionRescate/{{ rescateEditar.id }}" method="post" enctype="multipart/form-data" id="frm_editar_rescate">
             {% csrf_token %}
             
             <label for="fecha">Fecha:</label>
-            <input class="form-control" type="date" name="fecha" id="fecha" value="{{ rescate.fecha|date:'Y-m-d' }}" required><br>
+            <input class="form-control" type="date" name="fecha" id="fecha" value="{{ rescateEditar.fecha|date:'Y-m-d' }}" required><br>
 
             <label for="ubicacion">Ubicación:</label>
-            <input class="form-control" type="text" name="ubicacion" id="ubicacion" value="{{ rescate.ubicacion }}" required><br>
+            <input class="form-control" type="text" name="ubicacion" id="ubicacion" value="{{ rescateEditar.ubicacion }}" required><br>
 
             <label for="foto_rescate">Foto del Rescate:</label>
             <input class="form-control" type="file" name="foto_rescate" id="foto_rescate"><br>
 
             <button class="btn btn-warning" type="submit"><i class="fa fa-pen"></i> Editar</button>
-            <a class="btn btn-outline-danger" href="/rescates"><i class="fa fa-times"></i> Cancelar</a>
+            <a class="btn btn-outline-danger" href="/rescates/"><i class="fa fa-times"></i> Cancelar</a>
         </form>
 
         <script>

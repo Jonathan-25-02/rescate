@@ -5,7 +5,7 @@
     <div class="col-md-6 bg-light">
         <h1>Nuevo Equipo de Rescate</h1>
 
-        <form action="/guardarEquipo" method="post" enctype="multipart/form-data" id="frm_nuevo_equipo">
+        <form action="/guardarEquipo/" method="post" enctype="multipart/form-data" id="frm_nuevo_equipo">
             {% csrf_token %}
 
             <label for="nombre">Nombre del equipo:</label>
@@ -31,6 +31,15 @@
                     "nombre": { required: "Campo obligatorio", minlength: "Mínimo 3 caracteres" },
                     "especialidad": { required: "Ingrese la especialidad del equipo" }
                 }
+            });
+        </script>
+        <script>
+            $("#foto_equipo").fileinput({
+                language: "es",
+                allowedFileExtensions: ["png", "jpg", "jpeg"],
+                showCaption: false,
+                dropZoneEnabled: true,
+                showClose: false
             });
         </script>
     </div>

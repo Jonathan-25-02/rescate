@@ -17,13 +17,13 @@ def guardarRescate(request):
 
     Rescate.objects.create(fecha=fecha, ubicacion=ubicacion, foto_rescate=foto)
     messages.success(request, "Rescate guardado exitosamente")
-    return redirect('/rescate')
+    return redirect('/rescates/')
 
 def eliminarRescate(request, id):
     rescate = get_object_or_404(Rescate, id=id)
     rescate.delete()
     messages.success(request, "Rescate eliminado correctamente")
-    return redirect('/rescate')
+    return redirect('/rescates/')
 
 def editarRescate(request, id):
     rescateEditar = get_object_or_404(Rescate, id=id)
@@ -36,7 +36,7 @@ def procesarEdicionRescate(request, id):
     rescate.foto_rescate = request.FILES.get("foto_rescate", rescate.foto_rescate)
     rescate.save()
     messages.success(request, "Rescate actualizado correctamente")
-    return redirect('/rescate')
+    return redirect('/rescates/')
 
 
 def equipo(request):
@@ -96,13 +96,13 @@ def guardarReporte(request):
         pdf_informe=pdf
     )
     messages.success(request, "Reporte guardado exitosamente")
-    return redirect('/reporte')
+    return redirect('/reportes/')
 
 def eliminarReporte(request, id):
     reporte = get_object_or_404(ReporteRescate, id=id)
     reporte.delete()
     messages.success(request, "Reporte eliminado correctamente")
-    return redirect('/reporte')
+    return redirect('/reportes/')
 
 def editarReporte(request, id):
     reporteEditar = get_object_or_404(ReporteRescate, id=id)
@@ -122,31 +122,37 @@ def procesarEdicionReporte(request, id):
     reporte.pdf_informe = request.FILES.get("pdf_informe", reporte.pdf_informe)
     reporte.save()
     messages.success(request, "Reporte actualizado correctamente")
-    return redirect('/reporte')
+    return redirect('/reportes/')
 
-def lista_especies(request):
+def listaEspecies(request):
     especies = Especie.objects.all()
-    return render(request, 'especie/especie.html', {'especies': especies})
+    return render(request, 'especie.html', {'especies': especies})
 
-def nueva_especie(request):
-    return render(request, 'especie/nuevaEspecie.html')
+def nuevaEspecie(request):
+    return render(request, 'nuevaEspecie.html')
 
-def guardar_especie(request):
+def guardarEspecie(request):
     nombre = request.POST["nombre"]
-    Especie.objects.create(nombre=nombre)
-    return redirect('/especies')
+    descripcion = request.POST["descripcion"]
+    Especie.objects.create(nombre=nombre, descripcion=descripcion)
+    messages.success(request, "Especie guardada exitosamente")
+    return redirect('/especies/')
 
-def editar_especie(request, id):
+def editarEspecie(request, id):
     especie = get_object_or_404(Especie, id=id)
-    return render(request, 'especie/editarEspecie.html', {'especie': especie})
 
-def actualizar_especie(request, id):
+    return render(request, 'editarEspecie.html', {'especie': especie})
+
+def actualizarEspecie(request, id):
     especie = get_object_or_404(Especie, id=id)
     especie.nombre = request.POST["nombre"]
+    especie.descripcion = request.POST["descripcion"]
     especie.save()
-    return redirect('/especies')
+    messages.success(request, "Especie actualizada correctamente")
+    return redirect('/especies/')
 
-def eliminar_especie(request, id):
+def eliminarEspecie(request, id):
     especie = get_object_or_404(Especie, id=id)
     especie.delete()
-    return redirect('/especies')
+    messages.success(request, "Especie eliminada correctamente")
+    return redirect('/especies/')
