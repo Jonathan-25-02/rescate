@@ -24,12 +24,12 @@
         <script>
             $("#frm_editar_equipo").validate({
                 rules: {
-                    "nombre": { required: true },
-                    "especialidad": { required: true }
+                    "nombre": { required: true, minlength: 3 },
+                    "especialidad": { required: true, minlength: 5 }
                 },
                 messages: {
-                    "nombre": { required: "Campo obligatorio" },
-                    "especialidad": { required: "Campo obligatorio" }
+                    "nombre": { required: "Campo obligatorio", minlength: "Mínimo 3 caracteres" },
+                    "especialidad": { required: "Campo obligatorio", minlength: "Mínimo 5 caracteres" }
                 }
             });
             $("#foto_equipo").fileinput({
