@@ -30,17 +30,30 @@
         </form>
 
         <script>
+            // Agregamos un método personalizado para validar el rango de fecha
+            $.validator.addMethod("fechaRango", function(value, element) {
+                if (!value) return false; // required ya lo valida, pero por seguridad
+                let fecha = new Date(value);
+                let fechaMin = new Date('2000-01-01');
+                let fechaMax = new Date(); // fecha actual
+                return fecha >= fechaMin && fecha <= fechaMax;
+            }, "La fecha debe estar entre el 01/01/2000 y la fecha actual");
+
             $("#frm_nuevo_rescate").validate({
                 rules: {
-                    "fecha": { required: true },
+                    "fecha": { required: true, fechaRango: true },
                     "ubicacion": { required: true, minlength: 5 }
                 },
                 messages: {
-                    "fecha": { required: "Ingrese la fecha del rescate" },
+                    "fecha": {
+                        required: "Ingrese la fecha del rescate",
+                        fechaRango: "La fecha debe estar entre el 01/01/2000 y hoy"
+                    },
                     "ubicacion": { required: "Ingrese la ubicación", minlength: "Mínimo 5 caracteres" }
                 }
             });
         </script>
+
         <script>
             $("#foto_rescate").fileinput({
                 language: "es",
