@@ -3,23 +3,43 @@
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6 bg-light">
-        <h1>Editar Equipo</h1>
+        <h1>Actualizar Equipo de Rescate</h1>
 
-        <form action="/procesarEdicionEquipo/{{ equipoEditar.id }}" method="post" enctype="multipart/form-data">
+        <form action="/actualizarEquipo/{{ equipo.id }}" method="post" enctype="multipart/form-data" id="frm_editar_equipo">
             {% csrf_token %}
 
             <label for="nombre">Nombre:</label>
-            <input class="form-control" type="text" name="nombre" id="nombre" value="{{ equipoEditar.nombre }}"><br>
+            <input class="form-control" type="text" name="nombre" id="nombre" value="{{ equipo.nombre }}" required><br>
 
             <label for="especialidad">Especialidad:</label>
-            <input class="form-control" type="text" name="especialidad" id="especialidad" value="{{ equipoEditar.especialidad }}"><br>
+            <input class="form-control" type="text" name="especialidad" id="especialidad" value="{{ equipo.especialidad }}" required><br>
 
             <label for="foto_equipo">Foto del Equipo:</label>
             <input class="form-control" type="file" name="foto_equipo" id="foto_equipo"><br>
 
             <button class="btn btn-warning" type="submit"><i class="fa fa-pen"></i> Editar</button>
-            <a class="btn btn-outline-danger" href="/equipo"><i class="fa fa-times"></i> Cancelar</a>
+            <a class="btn btn-outline-danger" href="/equipos"><i class="fa fa-times"></i> Cancelar</a>
         </form>
+
+        <script>
+            $("#frm_editar_equipo").validate({
+                rules: {
+                    "nombre": { required: true },
+                    "especialidad": { required: true }
+                },
+                messages: {
+                    "nombre": { required: "Campo obligatorio" },
+                    "especialidad": { required: "Campo obligatorio" }
+                }
+            });
+            $("#foto_equipo").fileinput({
+                language: "es",
+                allowedFileExtensions: ["png", "jpg", "jpeg"],
+                showCaption: false,
+                dropZoneEnabled: true,
+                showClose: false
+            });
+        </script>
     </div>
     <div class="col-md-3"></div>
 </div>

@@ -1,9 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
 from .models import Rescate, EquipoRescate, ReporteRescate
-
-# ========================== RESCATES ==============================
 
 def rescate(request):
     rescates = Rescate.objects.all()
@@ -15,31 +13,31 @@ def nuevoRescate(request):
 def guardarRescate(request):
     fecha = request.POST["fecha"]
     ubicacion = request.POST["ubicacion"]
-    foto_rescate = request.FILES.get("foto_rescate")
-    
-    Rescate.objects.create(fecha=fecha, ubicación=ubicacion, foto_rescate=foto_rescate)
+    foto = request.FILES.get("foto_rescate")
+
+    Rescate.objects.create(fecha=fecha, ubicacion=ubicacion, foto_rescate=foto)
     messages.success(request, "Rescate guardado exitosamente")
-    return redirect("/rescates")
+    return redirect('/rescate')
 
 def eliminarRescate(request, id):
-    rescate = Rescate.objects.get(id=id)
+    rescate = get_object_or_404(Rescate, id=id)
     rescate.delete()
-    return redirect("/rescates")
+    messages.success(request, "Rescate eliminado correctamente")
+    return redirect('/rescate')
 
 def editarRescate(request, id):
-    rescate = Rescate.objects.get(id=id)
-    return render(request, "editarRescate.html", {'rescateEditar': rescate})
+    rescateEditar = get_object_or_404(Rescate, id=id)
+    return render(request, "editarRescate.html", {'rescateEditar': rescateEditar})
 
-def actualizarRescate(request, id):
-    rescate = Rescate.objects.get(id=id)
+def procesarEdicionRescate(request, id):
+    rescate = get_object_or_404(Rescate, id=id)
     rescate.fecha = request.POST["fecha"]
-    rescate.ubicación = request.POST["ubicacion"]
+    rescate.ubicacion = request.POST["ubicacion"]
     rescate.foto_rescate = request.FILES.get("foto_rescate", rescate.foto_rescate)
     rescate.save()
-    messages.success(request, "Rescate actualizado exitosamente")
-    return redirect("/rescates")
+    messages.success(request, "Rescate actualizado correctamente")
+    return redirect('/rescate')
 
-# ========================== EQUIPOS ==============================
 
 def equipo(request):
     equipos = EquipoRescate.objects.all()
@@ -51,33 +49,32 @@ def nuevoEquipo(request):
 def guardarEquipo(request):
     nombre = request.POST["nombre"]
     especialidad = request.POST["especialidad"]
-    foto_equipo = request.FILES.get("foto_equipo")
+    foto = request.FILES.get("foto_equipo")
 
-    EquipoRescate.objects.create(nombre=nombre, especialidad=especialidad, foto_equipo=foto_equipo)
+    EquipoRescate.objects.create(nombre=nombre, especialidad=especialidad, foto_equipo=foto)
     messages.success(request, "Equipo guardado exitosamente")
-    return redirect("/equipos")
+    return redirect('/equipo')
 
 def eliminarEquipo(request, id):
-    equipo = EquipoRescate.objects.get(id=id)
+    equipo = get_object_or_404(EquipoRescate, id=id)
     equipo.delete()
-    return redirect("/equipos")
+    messages.success(request, "Equipo eliminado correctamente")
+    return redirect('/equipo')
 
 def editarEquipo(request, id):
-    equipo = EquipoRescate.objects.get(id=id)
-    return render(request, "editarEquipo.html", {'equipoEditar': equipo})
+    equipoEditar = get_object_or_404(EquipoRescate, id=id)
+    return render(request, "editarEquipo.html", {'equipoEditar': equipoEditar})
 
-def actualizarEquipo(request, id):
-    equipo = EquipoRescate.objects.get(id=id)
+def procesarEdicionEquipo(request, id):
+    equipo = get_object_or_404(EquipoRescate, id=id)
     equipo.nombre = request.POST["nombre"]
     equipo.especialidad = request.POST["especialidad"]
     equipo.foto_equipo = request.FILES.get("foto_equipo", equipo.foto_equipo)
     equipo.save()
-    messages.success(request, "Equipo actualizado exitosamente")
-    return redirect("/equipos")
+    messages.success(request, "Equipo actualizado correctamente")
+    return redirect('/equipo')
 
-# ========================== REPORTES ==============================
-
-def reporte(request):
+def reportes(request):
     reportes = ReporteRescate.objects.all()
     return render(request, "reporte.html", {'reportes': reportes})
 
@@ -90,32 +87,66 @@ def guardarReporte(request):
     rescate_id = request.POST["rescate"]
     equipo_id = request.POST["equipo"]
     observaciones = request.POST["observaciones"]
-    pdf_informe = request.FILES.get("pdf_informe")
+    pdf = request.FILES.get("pdf_informe")
 
-    rescate = Rescate.objects.get(id=rescate_id)
-    equipo = EquipoRescate.objects.get(id=equipo_id)
-
-    ReporteRescate.objects.create(rescate=rescate, equipo=equipo, observaciones=observaciones, pdf_informe=pdf_informe)
+    ReporteRescate.objects.create(
+        rescate_id=rescate_id,
+        equipo_id=equipo_id,
+        observaciones=observaciones,
+        pdf_informe=pdf
+    )
     messages.success(request, "Reporte guardado exitosamente")
-    return redirect("/reportes")
+    return redirect('/reporte')
 
 def eliminarReporte(request, id):
-    reporte = ReporteRescate.objects.get(id=id)
+    reporte = get_object_or_404(ReporteRescate, id=id)
     reporte.delete()
-    return redirect("/reportes")
+    messages.success(request, "Reporte eliminado correctamente")
+    return redirect('/reporte')
 
 def editarReporte(request, id):
-    reporte = ReporteRescate.objects.get(id=id)
+    reporteEditar = get_object_or_404(ReporteRescate, id=id)
     rescates = Rescate.objects.all()
     equipos = EquipoRescate.objects.all()
-    return render(request, "editarReporte.html", {'reporteEditar': reporte, 'rescates': rescates, 'equipos': equipos})
+    return render(request, "editarReporte.html", {
+        'reporteEditar': reporteEditar,
+        'rescates': rescates,
+        'equipos': equipos
+    })
 
-def actualizarReporte(request, id):
-    reporte = ReporteRescate.objects.get(id=id)
-    reporte.rescate = Rescate.objects.get(id=request.POST["rescate"])
-    reporte.equipo = EquipoRescate.objects.get(id=request.POST["equipo"])
+def procesarEdicionReporte(request, id):
+    reporte = get_object_or_404(ReporteRescate, id=id)
+    reporte.rescate_id = request.POST["rescate"]
+    reporte.equipo_id = request.POST["equipo"]
     reporte.observaciones = request.POST["observaciones"]
     reporte.pdf_informe = request.FILES.get("pdf_informe", reporte.pdf_informe)
     reporte.save()
-    messages.success(request, "Reporte actualizado exitosamente")
-    return redirect("/reportes")
+    messages.success(request, "Reporte actualizado correctamente")
+    return redirect('/reporte')
+
+def lista_especies(request):
+    especies = Especie.objects.all()
+    return render(request, 'especie/especie.html', {'especies': especies})
+
+def nueva_especie(request):
+    return render(request, 'especie/nuevaEspecie.html')
+
+def guardar_especie(request):
+    nombre = request.POST["nombre"]
+    Especie.objects.create(nombre=nombre)
+    return redirect('/especies')
+
+def editar_especie(request, id):
+    especie = get_object_or_404(Especie, id=id)
+    return render(request, 'especie/editarEspecie.html', {'especie': especie})
+
+def actualizar_especie(request, id):
+    especie = get_object_or_404(Especie, id=id)
+    especie.nombre = request.POST["nombre"]
+    especie.save()
+    return redirect('/especies')
+
+def eliminar_especie(request, id):
+    especie = get_object_or_404(Especie, id=id)
+    especie.delete()
+    return redirect('/especies')

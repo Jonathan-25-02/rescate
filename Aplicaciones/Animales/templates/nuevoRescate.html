@@ -1,23 +1,38 @@
 {% extends './plantilla.html' %}
 {% block contenido %}
 <div class="row">
-    <div class="col-md-3"> </div>
+    <div class="col-md-3"></div>
     <div class="col-md-6 bg-light">
         <h1>Nuevo Rescate</h1>
-        <form action="/guardarRescate" enctype="multipart/form-data" method="post">
+
+        <form action="/guardarRescate" method="post" enctype="multipart/form-data" id="frm_nuevo_rescate">
             {% csrf_token %}
+
             <label for="fecha">Fecha:</label>
-            <input type="datetime-local" name="fecha" id="fecha" class="form-control" required><br>
+            <input type="date" class="form-control" name="fecha" id="fecha" required><br>
 
             <label for="ubicacion">Ubicación:</label>
-            <input type="text" name="ubicacion" id="ubicacion" class="form-control" required><br>
+            <input placeholder="Ingrese la ubicación del rescate" type="text" class="form-control" name="ubicacion" id="ubicacion" required><br>
 
-            <label for="foto_rescate">Foto del Rescate:</label>
-            <input type="file" name="foto_rescate" id="foto_rescate" class="form-control" required><br>
+            <label for="foto_rescate">Foto del rescate:</label>
+            <input type="file" class="form-control" name="foto_rescate" id="foto_rescate" accept="image/*"><br>
 
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <a href="/" class="btn btn-outline-danger">Cancelar</a>
+            <button class="btn btn-success" type="submit">Guardar</button>
+            <a class="btn btn-outline-danger" href="/rescates">Cancelar</a>
         </form>
+
+        <script>
+            $("#frm_nuevo_rescate").validate({
+                rules: {
+                    "fecha": { required: true },
+                    "ubicacion": { required: true, minlength: 5 }
+                },
+                messages: {
+                    "fecha": { required: "Ingrese la fecha del rescate" },
+                    "ubicacion": { required: "Ingrese la ubicación", minlength: "Mínimo 5 caracteres" }
+                }
+            });
+        </script>
     </div>
     <div class="col-md-3"></div>
 </div>

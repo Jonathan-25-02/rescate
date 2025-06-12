@@ -1,26 +1,53 @@
 {% extends './plantilla.html' %}
 {% block contenido %}
 <div class="row">
-    <div class="col-md-3"> </div>
+    <div class="col-md-3"></div>
     <div class="col-md-6 bg-light">
-        <h1>Nuevo Reporte</h1>
-        <form action="/guardarReporte" enctype="multipart/form-data" method="post">
-            {% csrf_token %}
-            <label for="rescate_id">ID Rescate:</label>
-            <input type="number" name="rescate_id" id="rescate_id" class="form-control" required><br>
+        <h1>Nuevo Reporte de Rescate</h1>
 
-            <label for="equipo_id">ID Equipo:</label>
-            <input type="number" name="equipo_id" id="equipo_id" class="form-control" required><br>
+        <form action="/guardarReporte" method="post" enctype="multipart/form-data" id="frm_nuevo_reporte">
+            {% csrf_token %}
+
+            <label for="rescate">Rescate:</label>
+            <select class="form-control" name="rescate" id="rescate" required>
+                <option value="">Seleccione un rescate</option>
+                {% for rescate in rescates %}
+                    <option value="{{ rescate.id }}">{{ rescate }}</option>
+                {% endfor %}
+            </select><br>
+
+            <label for="equipo">Equipo:</label>
+            <select class="form-control" name="equipo" id="equipo" required>
+                <option value="">Seleccione un equipo</option>
+                {% for equipo in equipos %}
+                    <option value="{{ equipo.id }}">{{ equipo }}</option>
+                {% endfor %}
+            </select><br>
 
             <label for="observaciones">Observaciones:</label>
-            <textarea name="observaciones" id="observaciones" class="form-control" rows="4" required></textarea><br>
+            <textarea class="form-control" name="observaciones" id="observaciones" required></textarea><br>
 
-            <label for="pdf_informe">Informe en PDF:</label>
-            <input type="file" name="pdf_informe" id="pdf_informe" class="form-control" required><br>
+            <label for="pdf_informe">Informe PDF:</label>
+            <input type="file" class="form-control" name="pdf_informe" id="pdf_informe" accept="application/pdf"><br>
 
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <a href="/reportes" class="btn btn-outline-danger">Cancelar</a>
+            <button class="btn btn-success" type="submit">Guardar</button>
+            <a class="btn btn-outline-danger" href="/reportes">Cancelar</a>
         </form>
+
+        <script>
+            $("#frm_nuevo_reporte").validate({
+                rules: {
+                    "rescate": { required: true },
+                    "equipo": { required: true },
+                    "observaciones": { required: true, minlength: 5 }
+                },
+                messages: {
+                    "rescate": { required: "Seleccione un rescate" },
+                    "equipo": { required: "Seleccione un equipo" },
+                    "observaciones": { required: "Ingrese observaciones", minlength: "Mínimo 5 caracteres" }
+                }
+            });
+        </script>
     </div>
     <div class="col-md-3"></div>
 </div>

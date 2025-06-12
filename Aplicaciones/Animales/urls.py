@@ -2,27 +2,28 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # ===================== RESCATES =====================
-    path('', views.rescate),  # página principal
-    path('nuevoRescate', views.nuevoRescate),
-    path('guardarRescate', views.guardarRescate),
+    # ===================== RESCATE =====================
+    path('', views.rescate),
+    path('rescate/', views.rescate),
+    path('nuevoRescate/', views.nuevoRescate),
+    path('guardarRescate/', views.guardarRescate),
     path('eliminarRescate/<id>', views.eliminarRescate),
     path('editarRescate/<id>', views.editarRescate),
-    path('actualizarRescate/<id>', views.actualizarRescate),
+    path('procesarEdicionRescate/<id>', views.procesarEdicionRescate),
 
-    # ===================== EQUIPOS =====================
-    path('equipos', views.equipo),
-    path('nuevoEquipo', views.nuevoEquipo),
-    path('guardarEquipo', views.guardarEquipo),
+    # ===================== EQUIPO DE RESCATE =====================
+    path('equipos/', views.equipo),
+    path('nuevoEquipo/', views.nuevoEquipo),
+    path('guardarEquipo/', views.guardarEquipo),
     path('eliminarEquipo/<id>', views.eliminarEquipo),
     path('editarEquipo/<id>', views.editarEquipo),
-    path('actualizarEquipo/<id>', views.actualizarEquipo),
+    path('procesarEdicionEquipo/<id>', views.procesarEdicionEquipo),
 
-    # ===================== REPORTES =====================
-    path('reportes', views.reporte),
-    path('nuevoReporte', views.nuevoReporte),
-    path('guardarReporte', views.guardarReporte),
+    # ===================== REPORTE DE RESCATE =====================
+    path('reportes/', views.reportes),
+    path('nuevoReporte/', views.nuevoReporte),
+    path('guardarReporte/', views.guardarReporte),
     path('eliminarReporte/<id>', views.eliminarReporte),
     path('editarReporte/<id>', views.editarReporte),
-    path('actualizarReporte/<id>', views.actualizarReporte),
+    path('procesarEdicionReporte/<id>', views.procesarEdicionReporte),
 ]

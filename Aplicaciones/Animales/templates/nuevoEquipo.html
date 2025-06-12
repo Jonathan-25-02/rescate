@@ -1,23 +1,38 @@
 {% extends './plantilla.html' %}
 {% block contenido %}
 <div class="row">
-    <div class="col-md-3"> </div>
+    <div class="col-md-3"></div>
     <div class="col-md-6 bg-light">
-        <h1>Nuevo Equipo</h1>
-        <form action="/guardarEquipo" enctype="multipart/form-data" method="post">
+        <h1>Nuevo Equipo de Rescate</h1>
+
+        <form action="/guardarEquipo" method="post" enctype="multipart/form-data" id="frm_nuevo_equipo">
             {% csrf_token %}
+
             <label for="nombre">Nombre del equipo:</label>
-            <input type="text" name="nombre" id="nombre" class="form-control" required><br>
+            <input type="text" class="form-control" name="nombre" id="nombre" required><br>
 
             <label for="especialidad">Especialidad:</label>
-            <input type="text" name="especialidad" id="especialidad" class="form-control" required><br>
+            <input type="text" class="form-control" name="especialidad" id="especialidad" required><br>
 
-            <label for="foto_equipo">Foto del Equipo:</label>
-            <input type="file" name="foto_equipo" id="foto_equipo" class="form-control" required><br>
+            <label for="foto_equipo">Foto del equipo:</label>
+            <input type="file" class="form-control" name="foto_equipo" id="foto_equipo" accept="image/*"><br>
 
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <a href="/equipos" class="btn btn-outline-danger">Cancelar</a>
+            <button class="btn btn-success" type="submit">Guardar</button>
+            <a class="btn btn-outline-danger" href="/equipos">Cancelar</a>
         </form>
+
+        <script>
+            $("#frm_nuevo_equipo").validate({
+                rules: {
+                    "nombre": { required: true, minlength: 3 },
+                    "especialidad": { required: true }
+                },
+                messages: {
+                    "nombre": { required: "Campo obligatorio", minlength: "Mínimo 3 caracteres" },
+                    "especialidad": { required: "Ingrese la especialidad del equipo" }
+                }
+            });
+        </script>
     </div>
     <div class="col-md-3"></div>
 </div>

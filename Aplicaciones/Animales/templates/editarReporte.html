@@ -3,34 +3,56 @@
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6 bg-light">
-        <h1>Editar Reporte</h1>
+        <h1>Actualizar Reporte de Rescate</h1>
 
-        <form action="/procesarEdicionReporte/{{ reporteEditar.id }}" method="post" enctype="multipart/form-data">
+        <form action="/actualizarReporte/{{ reporte.id }}" method="post" enctype="multipart/form-data" id="frm_editar_reporte">
             {% csrf_token %}
 
             <label for="rescate">Rescate:</label>
-            <select class="form-control" name="rescate" id="rescate">
-                {% for rescate in rescates %}
-                    <option value="{{ rescate.id }}" {% if rescate.id == reporteEditar.rescate.id %}selected{% endif %}>{{ rescate.id }} - {{ rescate.ubicacion }}</option>
+            <select class="form-control" name="rescate" id="rescate" required>
+                {% for r in rescates %}
+                    <option value="{{ r.id }}" {% if reporte.rescate.id == r.id %}selected{% endif %}>
+                        {{ r }}
+                    </option>
                 {% endfor %}
             </select><br>
 
             <label for="equipo">Equipo:</label>
-            <select class="form-control" name="equipo" id="equipo">
-                {% for equipo in equipos %}
-                    <option value="{{ equipo.id }}" {% if equipo.id == reporteEditar.equipo.id %}selected{% endif %}>{{ equipo.nombre }}</option>
+            <select class="form-control" name="equipo" id="equipo" required>
+                {% for e in equipos %}
+                    <option value="{{ e.id }}" {% if reporte.equipo.id == e.id %}selected{% endif %}>
+                        {{ e }}
+                    </option>
                 {% endfor %}
             </select><br>
 
             <label for="observaciones">Observaciones:</label>
-            <textarea class="form-control" name="observaciones" id="observaciones">{{ reporteEditar.observaciones }}</textarea><br>
+            <textarea class="form-control" name="observaciones" id="observaciones" required>{{ reporte.observaciones }}</textarea><br>
 
-            <label for="pdf_informe">Informe PDF:</label>
+            <label for="pdf_informe">Informe en PDF:</label>
             <input class="form-control" type="file" name="pdf_informe" id="pdf_informe"><br>
 
             <button class="btn btn-warning" type="submit"><i class="fa fa-pen"></i> Editar</button>
-            <a class="btn btn-outline-danger" href="/reporte"><i class="fa fa-times"></i> Cancelar</a>
+            <a class="btn btn-outline-danger" href="/reportes"><i class="fa fa-times"></i> Cancelar</a>
         </form>
+
+        <script>
+            $("#frm_editar_reporte").validate({
+                rules: {
+                    "observaciones": { required: true }
+                },
+                messages: {
+                    "observaciones": { required: "Campo obligatorio" }
+                }
+            });
+            $("#pdf_informe").fileinput({
+                language: "es",
+                allowedFileExtensions: ["pdf", "doc", "docx"],
+                showCaption: false,
+                dropZoneEnabled: true,
+                showClose: false
+            });
+        </script>
     </div>
     <div class="col-md-3"></div>
 </div>
