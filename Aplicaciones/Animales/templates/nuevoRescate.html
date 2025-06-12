@@ -42,14 +42,14 @@
             $("#frm_nuevo_rescate").validate({
                 rules: {
                     "fecha": { required: true, fechaRango: true },
-                    "ubicacion": { required: true, minlength: 5 }
+                    "ubicacion": { required: true, minlength: 10 }
                 },
                 messages: {
                     "fecha": {
                         required: "Ingrese la fecha del rescate",
                         fechaRango: "La fecha debe estar entre el 01/01/2000 y hoy"
                     },
-                    "ubicacion": { required: "Ingrese la ubicación", minlength: "Mínimo 5 caracteres" }
+                    "ubicacion": { required: "Ingrese la ubicación", minlength: "Mínimo 10 caracteres" }
                 }
             });
         </script>
