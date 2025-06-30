@@ -71,6 +71,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'RescateJA.wsgi.application'
 
 
+
+
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
@@ -128,3 +130,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL='/media/'
 MEDIA_ROOT=(os.path.join(BASE_DIR, 'RescateJA/media/'))
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

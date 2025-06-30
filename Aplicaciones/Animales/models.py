@@ -19,10 +19,13 @@ class Rescate(models.Model):
 class EquipoRescate(models.Model):
     nombre = models.CharField(max_length=100)
     especialidad = models.CharField(max_length=100)
-    foto_equipo = models.ImageField(upload_to='equipos/', default='equipos/default.jpg')  # Valor por defecto agregado
+    foto_equipo = models.ImageField(upload_to='equipos/', default='equipos/default.jpg')
+    fecha_creacion = models.DateField(null=True, blank=True)  
+    fecha_actualizacion = models.DateField(auto_now=True)  
 
     def __str__(self):
         return self.nombre
+
 
 class ReporteRescate(models.Model):
     rescate = models.OneToOneField(Rescate, on_delete=models.CASCADE)

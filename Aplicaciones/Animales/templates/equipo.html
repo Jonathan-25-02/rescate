@@ -10,6 +10,8 @@
             <th>ID</th>
             <th>Nombre</th>
             <th>Especialidad</th>
+            <th>Fecha de Creación</th>
+            <th>Fecha de Actualización</th>
             <th>Foto</th>
             <th>Acciones</th>
         </tr>
@@ -20,6 +22,8 @@
             <td>{{ e.id }}</td>
             <td>{{ e.nombre }}</td>
             <td>{{ e.especialidad }}</td>
+            <td>{{ e.fecha_creacion }}</td>
+            <td>{{ e.fecha_actualizacion }}</td>
             <td>
                 {% if e.foto_equipo %}
                     <img src="{{ e.foto_equipo.url }}" height="80px" alt="">

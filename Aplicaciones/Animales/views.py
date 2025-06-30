@@ -51,14 +51,26 @@ def equipo(request):
 def nuevoEquipo(request):
     return render(request, "nuevoEquipo.html")
 
-def guardarEquipo(request):
-    nombre = request.POST["nombre"]
-    especialidad = request.POST["especialidad"]
-    foto = request.FILES.get("foto_equipo")
+from django.contrib import messages
+from .models import EquipoRescate
 
-    EquipoRescate.objects.create(nombre=nombre, especialidad=especialidad, foto_equipo=foto)
-    messages.success(request, "Equipo guardado exitosamente")
-    return redirect('/equipo')
+def guardarEquipo(request):
+    if request.method == 'POST':
+        nombre = request.POST["nombre"]
+        especialidad = request.POST["especialidad"]
+        fecha_creacion = request.POST["fecha_creacion"]
+        foto = request.FILES.get("foto_equipo")
+
+        EquipoRescate.objects.create(
+            nombre=nombre,
+            especialidad=especialidad,
+            fecha_creacion=fecha_creacion,
+            foto_equipo=foto
+        )
+
+        messages.success(request, "Equipo guardado exitosamente")
+        return redirect('/equipo/')  # Cambia esto por la URL real
+
 
 def eliminarEquipo(request, id):
     equipo = get_object_or_404(EquipoRescate, id=id)
@@ -74,10 +86,16 @@ def procesarEdicionEquipo(request, id):
     equipo = get_object_or_404(EquipoRescate, id=id)
     equipo.nombre = request.POST["nombre"]
     equipo.especialidad = request.POST["especialidad"]
-    equipo.foto_equipo = request.FILES.get("foto_equipo", equipo.foto_equipo)
+    equipo.fecha_creacion=request.POST["fecha_creacion"]
+    equipo.fecha_actualizacion = request.POST["fecha_actualizacion"]
+    
+    if request.FILES.get("foto_equipo"):
+        equipo.foto_equipo = request.FILES["foto_equipo"]
+
     equipo.save()
     messages.success(request, "Equipo actualizado correctamente")
     return redirect('/equipo')
+
 
 def reportes(request):
     reportes = ReporteRescate.objects.all()
